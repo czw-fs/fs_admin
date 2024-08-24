@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.fsAdmin.modules.System.dict.mapper.DictItemMapper">
+
+    <select id="getList" resultType="com.fsAdmin.modules.System.dict.model.entities.DictItem">
+        select *
+        from sys_dict_item
+        <where>
+            <if test="dto.name!= null and dto.name != ''">
+                and name like concat('%', #{dto.name}, '%')
+            </if>
+            <if test="dto.value != null and dto.value != ''">
+                and value like concat('%', #{dto.value}, '%')
+            </if>
+            <if test="dto.status!= null and dto.status != ''">
+                and status = #{dto.status}
+            </if>
+
+        </where>
+    </select>
+</mapper>

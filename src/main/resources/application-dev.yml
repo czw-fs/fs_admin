@@ -1,0 +1,43 @@
+server:
+  port: 8413
+  servlet:
+    context-path: /api
+spring:
+  application:
+    name: fsAdmin
+  datasource:
+    driver-class-name: com.mysql.cj.jdbc.Driver
+    url: jdbc:mysql://localhost:3306/rbac?characterEncoding=utf-8&useSSL=false&serverTimezone=Asia/Shanghai&allowPublicKeyRetrieval=true
+    username: root
+    password: 123456
+  mvc: #全局字符串格式化，前端字符串转日期
+    format:
+      date: yyyy-MM-dd
+      time: HH:mm:ss
+      date-time: yyyy-MM-dd HH:mm:ss
+  main: # 不打印banner
+    banner-mode: off
+
+mybatis-plus:
+  global-config:
+    banner: false
+    db-config:
+      logic-delete-field: isDeleted
+      logic-not-delete-value: false
+      logic-delete-value: true
+      id-type: auto
+  configuration:
+    log-impl: org.apache.ibatis.logging.stdout.StdOutImpl
+  mapper-locations: classpath:com/example/springsecuritybase/modules/**/*.xml
+
+
+
+jwt:
+  secret: HelloWorld
+  expiration: 7 # 7天过期
+
+logging:
+  level:
+    org:
+      springframework:
+        security: debug

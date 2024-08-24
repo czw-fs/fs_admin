@@ -1,0 +1,38 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.fsAdmin.modules.System.menu.mapper.MenuMapper">
+
+    <select id="getList" resultType="com.fsAdmin.modules.System.menu.model.eneities.Menu">
+        select *
+        from sys_menu
+        <where>
+            <if test="dto.name!= null and dto.name!= ''">
+                and name like concat('%', #{dto.name}, '%')
+            </if>
+            <if test="dto.type != null and dto.type != ''">
+                and type = #{dto.type}
+            </if>
+            <if test="dto.display != null">
+                and display = #{dto.display}
+            </if>
+        </where>
+    </select>
+
+    <select id="getMenusByRoleIds" resultType="java.lang.String">
+        select sm.permission
+        from sys_menu sm
+                 left join sys_role_menu srm on srm.menu_id = sm.id
+        where srm.role_id in
+        <foreach collection="roleIds" item="roleId" open="(" close=")" separator=",">
+            #{roleId}
+        </foreach>
+    </select>
+
+    <select id="getPermissionByUserId" resultType="java.lang.String">
+        select sm.permission
+        from sys_menu sm
+                 left join sys_role_menu srm on srm.menu_id = sm.id
+                 left join sys_user_role sur on sur.role_id = srm.role_id
+        where sur.user_id = #{userId}
+    </select>
+</mapper>
