@@ -14,7 +14,7 @@ public interface RoleMapper extends BaseMapper<Role> {
 
     List<Role> selectList(@Param("dto") RoleSearchDto roleSearchDto);
 
-    List<Role> getRolesByUserId(@Param("userId") Long userId);
+    Set<Role> getRolesByUserId(@Param("userId") Long userId);
 
     Set<String> getRoleCodesByUserId(@Param("userId") Long userId);
 }

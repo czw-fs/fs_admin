@@ -47,7 +47,7 @@ public class UserServiceImpl extends ServiceImpl<UserMapper, User> implements Us
         UserInfoVo userInfoVo = userConvert.entityToUserInfoVo(user);
 
         //角色
-        List<Role> roleList = roleMapper.getRolesByUserId(userId);
+        Set<Role> roleList = roleMapper.getRolesByUserId(userId);
         List<String> roleCodeList = roleList.stream().map(Role::getCode).toList();
         userInfoVo.setRoleList(roleCodeList);
 
@@ -77,6 +77,8 @@ public class UserServiceImpl extends ServiceImpl<UserMapper, User> implements Us
 
     @Override
     public void updateUser(UpdateUserDto userDto) {
+        String encode = passwordEncoder.encode(userDto.getPassword());
+        userDto.setPassword(encode);
         User user = userConvert.updateUserDtoToEntity(userDto);
         userMapper.updateById(user);
     }

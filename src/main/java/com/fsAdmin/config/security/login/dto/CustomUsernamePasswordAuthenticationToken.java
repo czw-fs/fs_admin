@@ -24,9 +24,9 @@ public class CustomUsernamePasswordAuthenticationToken extends AbstractAuthentic
     //当前登录用户信息
     private UserLoginInfo currentUser;
     //角色
-    private Set<String> roleList;
+    private Set<String> roleCodeSet;
     //权限
-    private Set<String> permissionList;
+    private Set<String> permissionSet;
 
     public CustomUsernamePasswordAuthenticationToken(Collection<? extends GrantedAuthority> authorities) {
         super(authorities);//权限

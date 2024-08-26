@@ -10,6 +10,7 @@ import com.fsAdmin.modules.System.user.model.vo.UserVo;
 import com.fsAdmin.modules.System.user.service.UserService;
 import com.fsAdmin.modules.common.model.Result;
 import lombok.RequiredArgsConstructor;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
 
@@ -45,6 +46,7 @@ public class UserController {
      * @param userDto
      * @return
      */
+    @PreAuthorize("@ss.hasPerm('system:user:edit')")
     @PutMapping("/update")
     public Result<Void> updateUser(@RequestBody UpdateUserDto userDto) {
         userService.updateUser(userDto);

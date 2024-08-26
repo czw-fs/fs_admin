@@ -3,11 +3,15 @@ package com.fsAdmin.config.security.login.filter;
 
 import com.fsAdmin.config.security.login.dto.CustomUsernamePasswordAuthenticationToken;
 import com.fsAdmin.config.security.login.dto.UserLoginInfo;
+import com.fsAdmin.modules.System.menu.mapper.MenuMapper;
+import com.fsAdmin.modules.System.role.mapper.RoleMapper;
+import com.fsAdmin.modules.System.role.model.entities.Role;
 import com.fsAdmin.utils.JwtUtil;
 import jakarta.servlet.FilterChain;
 import jakarta.servlet.ServletException;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
+import lombok.RequiredArgsConstructor;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.web.authentication.AuthenticationFailureHandler;
 import org.springframework.stereotype.Component;
@@ -15,14 +19,15 @@ import org.springframework.util.StringUtils;
 import org.springframework.web.filter.OncePerRequestFilter;
 
 import java.io.IOException;
+import java.util.List;
+import java.util.Set;
 
 @Component
+@RequiredArgsConstructor
 public class JwtFilter extends OncePerRequestFilter {
     private final JwtUtil jwtUtil;
-
-    public JwtFilter(JwtUtil jwtUtil, AuthenticationFailureHandler authenticationFailureHandler) {
-        this.jwtUtil = jwtUtil;
-    }
+    private final RoleMapper roleMapper;
+    private final MenuMapper menuMapper;
 
 
     @Override
@@ -59,10 +64,16 @@ public class JwtFilter extends OncePerRequestFilter {
         }
 
         UserLoginInfo userLoginInfo = jwtUtil.getUserLoginInfoFromJwt(token);
+        Set<String> roleCodeSet = roleMapper.getRoleCodesByUserId(userLoginInfo.getUserId());
+        Set<String> permissionSet = menuMapper.getPermissionByUserId(userLoginInfo.getUserId());
 
+        //设置当前登录用户的上下文信息
         CustomUsernamePasswordAuthenticationToken authenticationToken = new CustomUsernamePasswordAuthenticationToken();
-        authenticationToken.setCurrentUser(userLoginInfo);
-        authenticationToken.setAuthenticated(true);//token有效，认证成功
+        authenticationToken
+                .setCurrentUser(userLoginInfo)
+                .setRoleCodeSet(roleCodeSet)//角色
+                .setPermissionSet(permissionSet)//权限
+                .setAuthenticated(true);//token有效，认证成功
 
         //验证成功，设置security上下文，无需验证
         SecurityContextHolder.getContext().setAuthentication(authenticationToken);
