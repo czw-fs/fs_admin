@@ -71,7 +71,7 @@ public class SecurityConfig {
         disableSomeHttpSetting(http);
         http
                 // 使用securityMatcher限定当前配置作用的路径
-                .securityMatcher("/registry")
+                .securityMatcher("/static/**")
                 .authorizeHttpRequests(authorize -> authorize.anyRequest().permitAll());
         return http.build();
     }
