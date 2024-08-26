@@ -18,6 +18,7 @@ import java.util.List;
  */
 @RestController
 @RequiredArgsConstructor
+@RequestMapping("/dictItem")
 public class DictItemController {
 
     private final DictItemService dictItemService;

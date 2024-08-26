@@ -39,7 +39,7 @@ public class JwtFilter extends OncePerRequestFilter {
         final String token = request.getHeader("token");
 
         //token为空或token过期，直接放行，进入认证流程
-        if(!StringUtils.hasLength(token) || !jwtUtil.isValidToken(token)){
+        if(!StringUtils.hasLength(token) || !jwtUtil.validToken(token)){
             chain.doFilter(request, response);
             return;
         }

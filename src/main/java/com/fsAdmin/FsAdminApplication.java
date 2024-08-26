@@ -16,7 +16,9 @@ import org.springframework.boot.autoconfigure.SpringBootApplication;
 public class FsAdminApplication {
 
 	public static void main(String[] args) {
+		log.info("starting");
 		SpringApplication.run(FsAdminApplication.class, args);
+		log.info("start success");
 	}
 
 }

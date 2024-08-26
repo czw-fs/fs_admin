@@ -30,8 +30,7 @@ public class JwtUtil {
         Map<String, Object> map = new HashMap<>();
         map.put("alg", "HS256");
         map.put("typ", "JWT");
-        String token = JWT.create()
-                .withHeader(map)// 添加头部
+        String token = JWT.create().withHeader(map)// 添加头部
                 //可以将基本信息放到claims中
                 .withClaim("userId", userLoginInfo.getUserId())//userId
                 .withClaim("username", userLoginInfo.getUsername())//用户名
@@ -44,33 +43,22 @@ public class JwtUtil {
 
     /**
      * 验证token是否有效
+     *
      * @param token
      * @return
      */
-    public boolean isValidToken(String token) {
+    public boolean validToken(String token) {
         try {
             JWTVerifier verifier = JWT.require(Algorithm.HMAC256(secret)).build();
             verifier.verify(token);
             return true;
         } catch (Exception e) {
-            log.error("Token is invalid: {}", e.getMessage());
             return false;
         }
     }
 
     /**
-     * 检查 JWT 是否过期
-     *
-     * @param token
-     * @return 如果 token 过期返回 true，否则返回 false
-     */
-    public boolean isTokenExpired(String token) {
-        Date activeTime = JWT.decode(token).getExpiresAt();
-        return activeTime.before(new Date());
-    }
-
-    /**
-     *  获取 token 过期时间
+     * 获取 token 过期时间
      */
     public Date getTokenExpiredTime(String token) {
         return JWT.decode(token).getExpiresAt();
@@ -93,11 +81,7 @@ public class JwtUtil {
         String username = map.get("username").asString();
         String sessionId = map.get("sessionId").asString();
 
-        return new UserLoginInfo()
-                .setUserId(userId)
-                .setUsername(username)
-                .setSessionId(sessionId)
-                ;
+        return new UserLoginInfo().setUserId(userId).setUsername(username).setSessionId(sessionId);
     }
 
     /**

@@ -45,10 +45,21 @@ public class SecurityConfig {
     public SecurityFilterChain loginFilterChain(HttpSecurity http) throws Exception {
         disableSomeHttpSetting(http);
         // 所有路径都需要认证
-        http.securityMatcher("/**")
+        http.securityMatchers(config -> {
+                    config.requestMatchers(new AntPathRequestMatcher("/dict/**"))
+                            .requestMatchers(new AntPathRequestMatcher("/dictItem/**"))
+                            .requestMatchers(new AntPathRequestMatcher("/menu/**"))
+                            .requestMatchers(new AntPathRequestMatcher("/role/**"))
+                            .requestMatchers(new AntPathRequestMatcher("/user/**"))
+                            .requestMatchers(new AntPathRequestMatcher("/static/**"))
+                    ;
+                })
+                .authorizeHttpRequests(authorize ->
+                        authorize.requestMatchers("/static/**").permitAll()
+                        .anyRequest().authenticated()
+                )
                 .cors((cors)-> cors.configurationSource(corsConfigurationSource()))//配置自定义跨域
-                .authorizeHttpRequests(authorize -> authorize.anyRequest().authenticated())
-                ;
+        ;
 
         // 用户名、密码登录
         // /login走认证过滤器
@@ -62,17 +73,6 @@ public class SecurityConfig {
         http.addFilterBefore(jwtFilter, UsernamePasswordAuthenticationFilter.class);
         http.addFilterBefore(usernameLoginFilter, UsernamePasswordAuthenticationFilter.class);
 
-        return http.build();
-    }
-
-    /** 不鉴权的api */
-    @Bean
-    public SecurityFilterChain publicApiFilterChain(HttpSecurity http) throws Exception {
-        disableSomeHttpSetting(http);
-        http
-                // 使用securityMatcher限定当前配置作用的路径
-                .securityMatcher("/static/**")
-                .authorizeHttpRequests(authorize -> authorize.anyRequest().permitAll());
         return http.build();
     }
 
