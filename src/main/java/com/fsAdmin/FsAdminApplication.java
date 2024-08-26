@@ -10,7 +10,6 @@ import org.springframework.boot.autoconfigure.SpringBootApplication;
 		"com.fsAdmin.modules.System.dict.mapper",
 		"com.fsAdmin.modules.System.menu.mapper",
 		"com.fsAdmin.modules.System.role.mapper",
-		"com.fsAdmin.modules.test.mapper"
 })
 @SpringBootApplication
 @Slf4j

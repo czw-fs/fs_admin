@@ -5,8 +5,9 @@ import com.fsAdmin.modules.System.dict.model.dto.CreateDictItemDto;
 import com.fsAdmin.modules.System.dict.model.dto.UpdateDictItemDto;
 import com.fsAdmin.modules.System.dict.model.entities.DictItem;
 import com.fsAdmin.modules.System.dict.model.vo.DictItemVo;
-import org.apache.ibatis.annotations.Mapper;
+
 import org.mapstruct.InheritConfiguration;
+import org.mapstruct.Mapper;
 
 import java.util.List;
 
