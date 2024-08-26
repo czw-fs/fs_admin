@@ -13,10 +13,6 @@ public class UserVo {
      */
     private String username;
     /**
-     * 密码
-     */
-    private String password;
-    /**
      * 性别
      */
     private String gender;
