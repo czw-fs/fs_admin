@@ -6,7 +6,7 @@ import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import com.fsAdmin.modules.System.user.model.dto.UserSearchDto;
 import com.fsAdmin.modules.System.user.model.entities.User;
 import com.fsAdmin.modules.System.user.model.vo.UserVo;
-import io.lettuce.core.dynamic.annotation.Param;
+import org.apache.ibatis.annotations.Param;
 
 import java.util.List;
 

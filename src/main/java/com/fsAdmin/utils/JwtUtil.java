@@ -43,7 +43,7 @@ public class JwtUtil {
 
     /**
      * 验证token是否有效
-     *
+     *  有效返回true 无效返回false
      * @param token
      * @return
      */

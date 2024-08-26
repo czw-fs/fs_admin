@@ -59,7 +59,7 @@ public class AuthenticationExceptionHandler implements AuthenticationEntryPoint 
         }
 
         //过期token
-        if(jwtUtil.validToken(token) && msg == null){
+        if(!jwtUtil.validToken(token) && msg == null){
             msg = "token已在 " + new SimpleDateFormat("yyyy-MM-dd HH:mm:ss").format(tokenExpiredTime) + "过期，请重新登录";
             log.error(msg);
             writer.write(new Gson().toJson(Result.error(HttpStatus.UNAUTHORIZED.value(), msg)));

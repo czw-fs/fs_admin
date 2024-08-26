@@ -4,7 +4,8 @@ package com.fsAdmin.modules.System.role.mapper;
 import com.baomidou.mybatisplus.core.mapper.BaseMapper;
 import com.fsAdmin.modules.System.role.model.dto.RoleSearchDto;
 import com.fsAdmin.modules.System.role.model.entities.Role;
-import io.lettuce.core.dynamic.annotation.Param;
+import org.apache.ibatis.annotations.Param;
+
 
 import java.util.List;
 import java.util.Set;

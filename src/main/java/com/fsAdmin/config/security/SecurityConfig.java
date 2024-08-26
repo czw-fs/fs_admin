@@ -44,31 +44,36 @@ public class SecurityConfig {
     @Bean
     public SecurityFilterChain loginFilterChain(HttpSecurity http) throws Exception {
         disableSomeHttpSetting(http);
-        // 所有路径都需要认证
+
         http.securityMatchers(config -> {
-                    config.requestMatchers(new AntPathRequestMatcher("/dict/**"))
+                    config
+                            .requestMatchers(new AntPathRequestMatcher("/dict/**"))
                             .requestMatchers(new AntPathRequestMatcher("/dictItem/**"))
                             .requestMatchers(new AntPathRequestMatcher("/menu/**"))
                             .requestMatchers(new AntPathRequestMatcher("/role/**"))
                             .requestMatchers(new AntPathRequestMatcher("/user/**"))
+                            .requestMatchers(new AntPathRequestMatcher("/login"))
+
                             .requestMatchers(new AntPathRequestMatcher("/static/**"))
                     ;
                 })
                 .authorizeHttpRequests(authorize ->
-                        authorize.requestMatchers("/static/**").permitAll()
-                        .anyRequest().authenticated()
+                        authorize
+                                .requestMatchers("/login").permitAll()
+                                .requestMatchers("/static/**").permitAll()
+                                .anyRequest().authenticated()
                 )
-                .cors((cors)-> cors.configurationSource(corsConfigurationSource()))//配置自定义跨域
+                .cors((cors) -> cors.configurationSource(corsConfigurationSource()))//配置自定义跨域
         ;
 
         // 用户名、密码登录
-        // /login走认证过滤器
         UsernameAuthenticationFilter usernameLoginFilter = new UsernameAuthenticationFilter(
                 new AntPathRequestMatcher("/login", HttpMethod.POST.name()),
                 new ProviderManager(usernamePasswordAuthenticationProvider),
                 loginSuccessHandler,
                 loginFailHandler
         );
+
         //注意顺序，先添加的过滤器排在前面，所以先添加jwtFilter
         http.addFilterBefore(jwtFilter, UsernamePasswordAuthenticationFilter.class);
         http.addFilterBefore(usernameLoginFilter, UsernamePasswordAuthenticationFilter.class);
@@ -111,6 +116,7 @@ public class SecurityConfig {
 
     /**
      * 跨域配置
+     *
      * @return
      */
     @Bean
@@ -124,7 +130,7 @@ public class SecurityConfig {
         configuration.setMaxAge(Duration.ofHours(1));
 
         UrlBasedCorsConfigurationSource source = new UrlBasedCorsConfigurationSource();
-        source.registerCorsConfiguration("/**",configuration);
+        source.registerCorsConfiguration("/**", configuration);
 
         return source;
     }
