@@ -1,4 +1,4 @@
-package com.fsAdmin.config.security.access;
+package com.fsAdmin.config.security.haveLoginFilterChain;
 
 import com.fsAdmin.utils.SecurityUtil;
 import lombok.RequiredArgsConstructor;

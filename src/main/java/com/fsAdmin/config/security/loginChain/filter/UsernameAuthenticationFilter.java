@@ -1,8 +1,8 @@
-package com.fsAdmin.config.security.login.filter;
+package com.fsAdmin.config.security.loginChain.filter;
 
 
-import com.fsAdmin.config.security.login.dto.CustomUsernamePasswordAuthenticationToken;
-import com.fsAdmin.config.security.login.dto.UserLoginDto;
+import com.fsAdmin.config.security.dto.CustomUsernamePasswordAuthenticationToken;
+import com.fsAdmin.config.security.dto.UserLoginDto;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import jakarta.servlet.ServletException;
 import jakarta.servlet.http.HttpServletRequest;

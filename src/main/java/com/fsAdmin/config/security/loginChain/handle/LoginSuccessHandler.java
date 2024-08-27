@@ -1,7 +1,7 @@
-package com.fsAdmin.config.security.login.handle;
+package com.fsAdmin.config.security.loginChain.handle;
 
 
-import com.fsAdmin.config.security.login.dto.UserLoginInfo;
+import com.fsAdmin.config.security.dto.UserLoginInfo;
 import com.fsAdmin.modules.common.model.Result;
 import com.fsAdmin.utils.JwtUtil;
 import com.google.gson.Gson;

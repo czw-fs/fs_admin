@@ -1,4 +1,4 @@
-package com.fsAdmin.config.security.login.dto;
+package com.fsAdmin.config.security.dto;
 
 import lombok.Data;
 

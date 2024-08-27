@@ -24,7 +24,7 @@ public class OperationLogAspect {
         if (operationLog == null) {
             return;
         }
-//     手动阀手动阀   insert
+//        insert
     }
 
     private OperationLog getLog(JoinPoint joinPoint) {

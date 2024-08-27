@@ -76,8 +76,8 @@ public class UserController {
      * @param userDto
      * @return
      */
-    @GetMapping("/page")
-    public Result<Page<UserVo>> page(@Validated UserSearchDto userDto) {
+    @GetMapping("/getUserPage")
+    public Result<Page<UserVo>> getUserPage(@Validated UserSearchDto userDto) {
         Page<UserVo> userDtoPage = userService.selectPage(userDto);
         return Result.success(userDtoPage);
     }

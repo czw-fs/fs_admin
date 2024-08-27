@@ -1,11 +1,10 @@
-package com.fsAdmin.config.security.login.filter;
+package com.fsAdmin.config.security.haveLoginFilterChain;
 
 
-import com.fsAdmin.config.security.login.dto.CustomUsernamePasswordAuthenticationToken;
-import com.fsAdmin.config.security.login.dto.UserLoginInfo;
+import com.fsAdmin.config.security.dto.CustomUsernamePasswordAuthenticationToken;
+import com.fsAdmin.config.security.dto.UserLoginInfo;
 import com.fsAdmin.modules.System.menu.mapper.MenuMapper;
 import com.fsAdmin.modules.System.role.mapper.RoleMapper;
-import com.fsAdmin.modules.System.role.model.entities.Role;
 import com.fsAdmin.utils.JwtUtil;
 import jakarta.servlet.FilterChain;
 import jakarta.servlet.ServletException;
@@ -13,13 +12,11 @@ import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
 import lombok.RequiredArgsConstructor;
 import org.springframework.security.core.context.SecurityContextHolder;
-import org.springframework.security.web.authentication.AuthenticationFailureHandler;
 import org.springframework.stereotype.Component;
 import org.springframework.util.StringUtils;
 import org.springframework.web.filter.OncePerRequestFilter;
 
 import java.io.IOException;
-import java.util.List;
 import java.util.Set;
 
 @Component

@@ -1,8 +1,8 @@
 package com.fsAdmin.utils;
 
 
-import com.fsAdmin.config.security.login.dto.CustomUsernamePasswordAuthenticationToken;
-import com.fsAdmin.config.security.login.dto.UserLoginInfo;
+import com.fsAdmin.config.security.dto.CustomUsernamePasswordAuthenticationToken;
+import com.fsAdmin.config.security.dto.UserLoginInfo;
 import org.springframework.security.core.context.SecurityContextHolder;
 
 import java.util.Set;

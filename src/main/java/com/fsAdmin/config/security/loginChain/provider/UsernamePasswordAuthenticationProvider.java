@@ -1,8 +1,8 @@
-package com.fsAdmin.config.security.login.provider;
+package com.fsAdmin.config.security.loginChain.provider;
 
 
-import com.fsAdmin.config.security.login.dto.CustomUsernamePasswordAuthenticationToken;
-import com.fsAdmin.config.security.login.dto.UserLoginInfo;
+import com.fsAdmin.config.security.dto.CustomUsernamePasswordAuthenticationToken;
+import com.fsAdmin.config.security.dto.UserLoginInfo;
 import com.fsAdmin.modules.System.menu.mapper.MenuMapper;
 import com.fsAdmin.modules.System.role.mapper.RoleMapper;
 import com.fsAdmin.modules.System.user.model.entities.User;
