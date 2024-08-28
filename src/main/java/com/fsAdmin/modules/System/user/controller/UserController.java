@@ -21,20 +21,20 @@ public class UserController {
 
     private final UserService userService;
 
-    @GetMapping("/getCurrentUser")
+    @GetMapping("/getCurrentUserInfo")
     public Result<UserVo> getCurrentUserInfo() {
         UserVo userVo = userService.getCurrentUserInfo();
         return Result.success(userVo);
     }
 
-    /**
-     * 获取当前登录用户信息，角色，权限
-     */
-    @GetMapping("/getCurLoginUserInfoVo")
-    public Result<UserInfoVo> getCurLoginUserInfoVo() {
-        UserInfoVo userInfoVo = userService.getUserInfoVo();
-        return Result.success(userInfoVo);
-    }
+//    /**
+//     * 获取当前登录用户信息，角色，权限
+//     */
+//    @GetMapping("/getCurLoginUserInfoVo")
+//    public Result<UserInfoVo> getCurLoginUserInfoVo() {
+//        UserInfoVo userInfoVo = userService.getUserInfoVo();
+//        return Result.success(userInfoVo);
+//    }
 
     /**
      * 新增用户
@@ -52,7 +52,6 @@ public class UserController {
      * @param userDto
      * @return
      */
-    @PreAuthorize("@ss.hasPerm('system:user:edit')")
     @PutMapping("/update")
     public Result<Void> updateUser(@RequestBody UpdateUserDto userDto) {
         userService.updateUser(userDto);
@@ -63,7 +62,7 @@ public class UserController {
      * 根据id查询用户
      */
     @GetMapping("/{id}")
-    public Result<UserVo> getById(@PathVariable Long id) {
+        public Result<UserVo> getUserById(@PathVariable Long id) {
         UserVo userVo = userService.getOneById(id);
         return Result.success(userVo);
     }
@@ -72,7 +71,7 @@ public class UserController {
      * 根据id删除用户
      */
     @DeleteMapping("/{id}")
-    public Result<Void> delete(@PathVariable Long id) {
+    public Result<Void> deleteUserById(@PathVariable Long id) {
         userService.removeById(id);
         return Result.success();
     }

@@ -44,27 +44,27 @@ public class UserServiceImpl extends ServiceImpl<UserMapper, User> implements Us
         return userVo;
     }
 
-    @Override
-    public UserInfoVo getUserInfoVo() {
-        Long userId = SecurityUtil.getUserId();
-
-        //用户基本信息
-        User user = userMapper.selectById(userId);
-        UserInfoVo userInfoVo = userConvert.entityToUserInfoVo(user);
-
-        //角色
-        Set<Role> roleList = roleMapper.getRolesByUserId(userId);
-        List<String> roleCodeList = roleList.stream().map(Role::getCode).toList();
-        userInfoVo.setRoleList(roleCodeList);
-
-        //权限
-        Set<Long> roleIds = roleList.stream().map(Role::getId).collect(Collectors.toSet());
-        if(!CollectionUtils.isEmpty(roleIds)){
-            Set<String> permissionList = menuMapper.getMenusByRoleIds(roleIds);
-            userInfoVo.setPermissionList(permissionList);
-        }
-        return userInfoVo;
-    }
+//    @Override
+//    public UserInfoVo getUserInfoVo() {
+//        Long userId = SecurityUtil.getUserId();
+//
+//        //用户基本信息
+//        User user = userMapper.selectById(userId);
+//        UserInfoVo userInfoVo = userConvert.entityToUserInfoVo(user);
+//
+//        //角色
+//        Set<Role> roleList = roleMapper.getRolesByUserId(userId);
+//        List<String> roleCodeList = roleList.stream().map(Role::getCode).toList();
+//        userInfoVo.setRoleList(roleCodeList);
+//
+//        //权限
+//        Set<Long> roleIds = roleList.stream().map(Role::getId).collect(Collectors.toSet());
+//        if(!CollectionUtils.isEmpty(roleIds)){
+//            Set<String> permissionList = menuMapper.getMenusByRoleIds(roleIds);
+//            userInfoVo.setPermissionList(permissionList);
+//        }
+//        return userInfoVo;
+//    }
 
     @Override
     public User selectUserByUsername(String username) {

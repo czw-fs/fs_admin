@@ -20,6 +20,7 @@ import org.springframework.security.config.annotation.method.configuration.Enabl
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
 import org.springframework.security.config.annotation.web.configurers.AbstractHttpConfigurer;
+import org.springframework.security.config.annotation.web.configurers.RequestCacheConfigurer;
 import org.springframework.security.web.SecurityFilterChain;
 import org.springframework.security.web.authentication.UsernamePasswordAuthenticationFilter;
 import org.springframework.security.web.savedrequest.NullRequestCache;
@@ -112,7 +113,7 @@ public class SecurityConfig {
                 .logout(AbstractHttpConfigurer::disable)
                 .sessionManagement(AbstractHttpConfigurer::disable)
                 .csrf(AbstractHttpConfigurer::disable)// requestCache用于重定向，前后端分析项目无需重定向，requestCache也用不上
-                .requestCache(cache -> cache.requestCache(new NullRequestCache()))
+                .requestCache(RequestCacheConfigurer::disable)
                 .anonymous(AbstractHttpConfigurer::disable);// 无需给用户一个匿名身份
     }
 }
