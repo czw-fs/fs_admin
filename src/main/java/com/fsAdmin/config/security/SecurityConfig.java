@@ -4,7 +4,7 @@ package com.fsAdmin.config.security;
 
 import com.fsAdmin.config.security.haveLoginFilterChain.JwtFilter;
 import com.fsAdmin.config.security.loginChain.filter.UsernameAuthenticationFilter;
-import com.fsAdmin.config.security.loginChain.handle.AuthenticationExceptionHandler;
+import com.fsAdmin.config.security.haveLoginFilterChain.handle.AuthenticationExceptionHandler;
 import com.fsAdmin.config.security.haveLoginFilterChain.handle.CustomAccessDeniedHandler;
 import com.fsAdmin.config.security.loginChain.handle.LoginFailHandler;
 import com.fsAdmin.config.security.loginChain.handle.LoginSuccessHandler;
@@ -13,7 +13,6 @@ import com.fsAdmin.modules.System.menu.mapper.MenuMapper;
 import com.fsAdmin.modules.System.role.mapper.RoleMapper;
 import com.fsAdmin.utils.JwtUtil;
 import lombok.RequiredArgsConstructor;
-import org.springframework.boot.web.servlet.FilterRegistrationBean;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.security.authentication.ProviderManager;
@@ -26,7 +25,6 @@ import org.springframework.security.web.authentication.UsernamePasswordAuthentic
 import org.springframework.security.web.savedrequest.NullRequestCache;
 import org.springframework.security.web.util.matcher.AntPathRequestMatcher;
 import org.springframework.web.cors.CorsConfigurationSource;
-import org.springframework.web.filter.CorsFilter;
 
 @Configuration
 @EnableWebSecurity
@@ -42,7 +40,6 @@ public class SecurityConfig {
     private final JwtUtil jwtUtil;
     private final RoleMapper roleMapper;
     private final MenuMapper menuMapper;
-    private final CorsConfigurationSource corsConfigurationSource;
 
     /**
      * 登录请求的过滤器链
@@ -95,6 +92,7 @@ public class SecurityConfig {
                 )
                 .exceptionHandling(ex -> ex
                         .accessDeniedHandler(customAccessDeniedHandler) // 授权失败处理
+                        .authenticationEntryPoint(authenticationExceptionHandler)
                 );
 
         JwtFilter jwtFilter = new JwtFilter(jwtUtil, roleMapper, menuMapper);

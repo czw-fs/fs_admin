@@ -1,4 +1,4 @@
-package com.fsAdmin.config.security.loginChain.handle;
+package com.fsAdmin.config.security.haveLoginFilterChain.handle;
 
 
 import com.fsAdmin.modules.common.model.Result;
@@ -22,7 +22,7 @@ import java.text.SimpleDateFormat;
 import java.util.Date;
 
 /**
- * 认证失败处理器
+ * 访问需要认证的资源，但是未认证，或认证过期，就会进入这个处理器
  */
 @Component
 @RequiredArgsConstructor

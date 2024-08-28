@@ -5,18 +5,24 @@ import com.fsAdmin.config.security.dto.CustomUsernamePasswordAuthenticationToken
 import com.fsAdmin.config.security.dto.UserLoginInfo;
 import com.fsAdmin.modules.System.menu.mapper.MenuMapper;
 import com.fsAdmin.modules.System.role.mapper.RoleMapper;
+import com.fsAdmin.modules.common.model.Result;
 import com.fsAdmin.utils.JwtUtil;
+import com.google.gson.Gson;
 import jakarta.servlet.FilterChain;
 import jakarta.servlet.ServletException;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
 import lombok.RequiredArgsConstructor;
+import org.springframework.http.HttpStatus;
+import org.springframework.security.core.AuthenticationException;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Component;
 import org.springframework.util.StringUtils;
 import org.springframework.web.filter.OncePerRequestFilter;
 
 import java.io.IOException;
+import java.text.SimpleDateFormat;
+import java.util.Date;
 import java.util.Set;
 
 
@@ -60,7 +66,7 @@ public class JwtFilter extends OncePerRequestFilter {
         final String token = request.getHeader("token");
 
         //token为空或token过期，直接放行，进入认证流程
-        if (!StringUtils.hasLength(token) || !jwtUtil.validToken(token)) {
+        if (!jwtUtil.validToken(token)) {
             chain.doFilter(request, response);
             return;
         }

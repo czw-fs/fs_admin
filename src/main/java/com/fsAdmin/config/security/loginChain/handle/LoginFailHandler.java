@@ -8,6 +8,7 @@ import jakarta.servlet.ServletException;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
 import lombok.extern.slf4j.Slf4j;
+import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
 import org.springframework.security.core.AuthenticationException;
 import org.springframework.security.web.authentication.AuthenticationFailureHandler;
@@ -33,14 +34,12 @@ public class LoginFailHandler implements AuthenticationFailureHandler {
 
     @Override
     public void onAuthenticationFailure(HttpServletRequest request, HttpServletResponse response, AuthenticationException exception) throws IOException, ServletException {
-
-
         log.error(exception.getMessage());
-
         response.setContentType(MediaType.APPLICATION_JSON_UTF8_VALUE);
 
         PrintWriter writer = response.getWriter();
-        writer.print(new Gson().toJson(Result.error(exception.getMessage())));
+        writer.write(new Gson().toJson(Result.error(HttpStatus.UNAUTHORIZED.value(), "登录失败，请检查用户名或密码")));
+
         writer.flush();
         writer.close();
     }
