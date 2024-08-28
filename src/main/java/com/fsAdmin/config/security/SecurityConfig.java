@@ -26,6 +26,7 @@ import org.springframework.security.web.authentication.UsernamePasswordAuthentic
 import org.springframework.security.web.savedrequest.NullRequestCache;
 import org.springframework.security.web.util.matcher.AntPathRequestMatcher;
 import org.springframework.web.cors.CorsConfigurationSource;
+import org.springframework.web.filter.CorsFilter;
 
 @Configuration
 @EnableWebSecurity
@@ -41,6 +42,7 @@ public class SecurityConfig {
     private final JwtUtil jwtUtil;
     private final RoleMapper roleMapper;
     private final MenuMapper menuMapper;
+    private final CorsConfigurationSource corsConfigurationSource;
 
     /**
      * 登录请求的过滤器链

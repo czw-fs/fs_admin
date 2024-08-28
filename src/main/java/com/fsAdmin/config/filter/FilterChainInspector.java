@@ -11,7 +11,7 @@ import org.springframework.stereotype.Component;
 
 
 @Component
-@Order(1)  // This ensures it runs early
+@Order(3)  // This ensures it runs early
 public class FilterChainInspector implements CommandLineRunner {
 
 
