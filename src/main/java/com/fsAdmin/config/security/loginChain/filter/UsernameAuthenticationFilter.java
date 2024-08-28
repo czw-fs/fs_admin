@@ -37,6 +37,11 @@ public class UsernameAuthenticationFilter extends AbstractAuthenticationProcessi
 
     @Override
     public Authentication attemptAuthentication(HttpServletRequest request, HttpServletResponse response) throws AuthenticationException, IOException, ServletException {
+
+        if ("OPTIONS".equals(request.getMethod())) {
+            response.setStatus(HttpServletResponse.SC_OK);
+        }
+
         // 提取请求体的数据
         UserLoginDto userLoginDto = null;
         try {

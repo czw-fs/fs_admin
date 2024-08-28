@@ -2,6 +2,7 @@ package com.fsAdmin.config.exeception;
 
 
 import com.fsAdmin.modules.common.model.Result;
+import jakarta.servlet.http.HttpServletResponse;
 import jakarta.validation.ConstraintViolation;
 import jakarta.validation.ConstraintViolationException;
 import org.springframework.context.support.DefaultMessageSourceResolvable;
@@ -23,8 +24,8 @@ public class GlobalValidatedExceptionHandler {
 
     // <1> 处理 form data方式调用接口校验失败抛出的异常
     @ExceptionHandler(BindException.class)
-    public Result<List<String>> bindExceptionHandler(BindException e) {
-
+    public Result<List<String>> bindExceptionHandler(HttpServletResponse response,BindException e) {
+        response.setStatus(HttpStatus.BAD_REQUEST.value());
         List<FieldError> fieldErrors = e.getBindingResult().getFieldErrors();
         List<String> collect = fieldErrors.stream().map(DefaultMessageSourceResolvable::getDefaultMessage).collect(Collectors.toList());
 
@@ -33,8 +34,8 @@ public class GlobalValidatedExceptionHandler {
 
     // <2> 处理 json 请求体调用接口校验失败抛出的异常
     @ExceptionHandler(MethodArgumentNotValidException.class)
-    public Result<List<String>> methodArgumentNotValidExceptionHandler(MethodArgumentNotValidException e) {
-
+    public Result<List<String>> methodArgumentNotValidExceptionHandler(HttpServletResponse response,MethodArgumentNotValidException e) {
+        response.setStatus(HttpStatus.BAD_REQUEST.value());
         List<FieldError> fieldErrors = e.getBindingResult().getFieldErrors();
         List<String> collect = fieldErrors.stream().map(DefaultMessageSourceResolvable::getDefaultMessage).collect(Collectors.toList());
 
@@ -44,8 +45,8 @@ public class GlobalValidatedExceptionHandler {
 
     // <3> 处理单个参数校验失败抛出的异常
     @ExceptionHandler(ConstraintViolationException.class)
-    public Result<List<String>> constraintViolationExceptionHandler(ConstraintViolationException e) {
-
+    public Result<List<String>> constraintViolationExceptionHandler(HttpServletResponse response,ConstraintViolationException e) {
+        response.setStatus(HttpStatus.BAD_REQUEST.value());
         Set<ConstraintViolation<?>> constraintViolations = e.getConstraintViolations();
         List<String> collect = constraintViolations.stream().map(ConstraintViolation::getMessage).collect(Collectors.toList());
 

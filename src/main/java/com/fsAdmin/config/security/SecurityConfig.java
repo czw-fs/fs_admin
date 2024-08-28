@@ -1,6 +1,7 @@
 package com.fsAdmin.config.security;
 
 
+import com.fsAdmin.config.security.cors.CorsConfig;
 import com.fsAdmin.config.security.haveLoginFilterChain.JwtFilter;
 import com.fsAdmin.config.security.loginChain.filter.UsernameAuthenticationFilter;
 import com.fsAdmin.config.security.loginChain.handle.AuthenticationExceptionHandler;
@@ -20,13 +21,7 @@ import org.springframework.security.web.SecurityFilterChain;
 import org.springframework.security.web.authentication.UsernamePasswordAuthenticationFilter;
 import org.springframework.security.web.savedrequest.NullRequestCache;
 import org.springframework.security.web.util.matcher.AntPathRequestMatcher;
-import org.springframework.security.web.util.matcher.RequestMatcher;
-import org.springframework.web.cors.CorsConfiguration;
 import org.springframework.web.cors.CorsConfigurationSource;
-import org.springframework.web.cors.UrlBasedCorsConfigurationSource;
-
-import java.time.Duration;
-import java.util.List;
 
 @Configuration
 @EnableWebSecurity
@@ -34,12 +29,13 @@ import java.util.List;
 @RequiredArgsConstructor
 public class SecurityConfig {
 
+    private final UsernamePasswordAuthenticationProvider usernamePasswordAuthenticationProvider;
     private final AuthenticationExceptionHandler authenticationExceptionHandler;
     private final CustomAccessDeniedHandler customAccessDeniedHandler;
     private final LoginSuccessHandler loginSuccessHandler;
     private final LoginFailHandler loginFailHandler;
-    private final UsernamePasswordAuthenticationProvider usernamePasswordAuthenticationProvider;
     private final JwtFilter jwtFilter;
+    private final CorsConfigurationSource corsConfigurationSource;
 
     /**
      * 登录请求的过滤器链
@@ -48,8 +44,9 @@ public class SecurityConfig {
     public SecurityFilterChain loginFilterChain(HttpSecurity http) throws Exception {
         disableSomeHttpSetting(http);
 
-        http.cors((cors) -> cors.configurationSource(corsConfigurationSource()))//配置自定义跨域
-                .securityMatchers(config -> config.requestMatchers(new AntPathRequestMatcher("/login")))
+        http.cors(cors -> cors.configurationSource(corsConfigurationSource))
+                .securityMatchers(config -> config.requestMatchers(new AntPathRequestMatcher("/login", "POST")))
+                .authorizeHttpRequests(authorize -> authorize.requestMatchers("/login", "POST").permitAll())
                 .exceptionHandling(exceptionHandling -> exceptionHandling
                         .authenticationEntryPoint(authenticationExceptionHandler)// 认证失败异常
                 );
@@ -77,7 +74,7 @@ public class SecurityConfig {
     public SecurityFilterChain jwtFilterChain(HttpSecurity http) throws Exception {
         disableSomeHttpSetting(http);
 
-        http.cors((cors) -> cors.configurationSource(corsConfigurationSource()))//配置自定义跨域
+        http.cors(cors -> cors.configurationSource(corsConfigurationSource))
                 .securityMatchers(config -> {
                     config.requestMatchers(
                                     new AntPathRequestMatcher("/dict/**"))
@@ -108,27 +105,5 @@ public class SecurityConfig {
                 .csrf(AbstractHttpConfigurer::disable)// requestCache用于重定向，前后端分析项目无需重定向，requestCache也用不上
                 .requestCache(cache -> cache.requestCache(new NullRequestCache()))
                 .anonymous(AbstractHttpConfigurer::disable);// 无需给用户一个匿名身份
-    }
-
-
-    /**
-     * 跨域配置
-     *
-     * @return
-     */
-    @Bean
-    public CorsConfigurationSource corsConfigurationSource() {
-
-        CorsConfiguration configuration = new CorsConfiguration();
-        configuration.setAllowCredentials(true);
-        configuration.setAllowedOrigins(List.of("*"));
-        configuration.setAllowedMethods(List.of("*"));
-        configuration.setAllowedHeaders(List.of("*"));
-        configuration.setMaxAge(Duration.ofHours(1));
-
-        UrlBasedCorsConfigurationSource source = new UrlBasedCorsConfigurationSource();
-        source.registerCorsConfiguration("/**", configuration);
-
-        return source;
     }
 }

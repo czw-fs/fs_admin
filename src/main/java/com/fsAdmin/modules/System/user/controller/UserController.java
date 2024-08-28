@@ -21,6 +21,12 @@ public class UserController {
 
     private final UserService userService;
 
+    @GetMapping("/getCurrentUser")
+    public Result<UserVo> getCurrentUserInfo() {
+        UserVo userVo = userService.getCurrentUserInfo();
+        return Result.success(userVo);
+    }
+
     /**
      * 获取当前登录用户信息，角色，权限
      */

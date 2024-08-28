@@ -15,6 +15,7 @@ spring:
       date: yyyy-MM-dd
       time: HH:mm:ss
       date-time: yyyy-MM-dd HH:mm:ss
+    static-path-pattern: /static/** #静态资源路径 http://localhost:8413/api/static/***
   main: # 不打印banner
     banner-mode: off
 
@@ -29,8 +30,6 @@ mybatis-plus:
   configuration:
     log-impl: org.apache.ibatis.logging.stdout.StdOutImpl
   mapper-locations: classpath:com/example/springsecuritybase/modules/**/*.xml
-
-
 
 jwt:
   secret: HelloWorld

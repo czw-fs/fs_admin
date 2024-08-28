@@ -22,4 +22,6 @@ public interface UserService extends IService<User> {
     UserVo getOneById(Long id);
 
     UserInfoVo getUserInfoVo();
+
+    UserVo getCurrentUserInfo();
 }

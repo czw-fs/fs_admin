@@ -35,8 +35,14 @@ public class UserServiceImpl extends ServiceImpl<UserMapper, User> implements Us
     private final UserConvert userConvert;
     private final PasswordEncoder passwordEncoder;
     private final RoleMapper roleMapper;
-    private final RoleConvert roleConvert;
     private final MenuMapper menuMapper;
+
+    @Override
+    public UserVo getCurrentUserInfo() {
+        User user = userMapper.selectById(SecurityUtil.getUserId());
+        UserVo userVo = userConvert.entityToUserVo(user);
+        return userVo;
+    }
 
     @Override
     public UserInfoVo getUserInfoVo() {

@@ -48,7 +48,6 @@ public class JwtFilter extends OncePerRequestFilter {
         //OPTIONS 请求直接放行：预检请求
         if ("OPTIONS".equals(request.getMethod())) {
             response.setStatus(HttpServletResponse.SC_OK);
-            chain.doFilter(request, response);
             return;
         }
 
