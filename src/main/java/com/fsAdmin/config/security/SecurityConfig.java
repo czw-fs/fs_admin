@@ -1,7 +1,7 @@
 package com.fsAdmin.config.security;
 
 
-import com.fsAdmin.config.security.cors.CorsConfig;
+
 import com.fsAdmin.config.security.haveLoginFilterChain.JwtFilter;
 import com.fsAdmin.config.security.loginChain.filter.UsernameAuthenticationFilter;
 import com.fsAdmin.config.security.loginChain.handle.AuthenticationExceptionHandler;
@@ -9,7 +9,11 @@ import com.fsAdmin.config.security.haveLoginFilterChain.handle.CustomAccessDenie
 import com.fsAdmin.config.security.loginChain.handle.LoginFailHandler;
 import com.fsAdmin.config.security.loginChain.handle.LoginSuccessHandler;
 import com.fsAdmin.config.security.loginChain.provider.UsernamePasswordAuthenticationProvider;
+import com.fsAdmin.modules.System.menu.mapper.MenuMapper;
+import com.fsAdmin.modules.System.role.mapper.RoleMapper;
+import com.fsAdmin.utils.JwtUtil;
 import lombok.RequiredArgsConstructor;
+import org.springframework.boot.web.servlet.FilterRegistrationBean;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.security.authentication.ProviderManager;
@@ -34,8 +38,9 @@ public class SecurityConfig {
     private final CustomAccessDeniedHandler customAccessDeniedHandler;
     private final LoginSuccessHandler loginSuccessHandler;
     private final LoginFailHandler loginFailHandler;
-    private final JwtFilter jwtFilter;
-    private final CorsConfigurationSource corsConfigurationSource;
+    private final JwtUtil jwtUtil;
+    private final RoleMapper roleMapper;
+    private final MenuMapper menuMapper;
 
     /**
      * 登录请求的过滤器链
@@ -44,22 +49,21 @@ public class SecurityConfig {
     public SecurityFilterChain loginFilterChain(HttpSecurity http) throws Exception {
         disableSomeHttpSetting(http);
 
-        http.cors(cors -> cors.configurationSource(corsConfigurationSource))
+        http
                 .securityMatchers(config -> config.requestMatchers(new AntPathRequestMatcher("/login", "POST")))
                 .authorizeHttpRequests(authorize -> authorize.requestMatchers("/login", "POST").permitAll())
                 .exceptionHandling(exceptionHandling -> exceptionHandling
                         .authenticationEntryPoint(authenticationExceptionHandler)// 认证失败异常
                 );
 
-        // 用户名、密码登录
-        UsernameAuthenticationFilter usernameLoginFilter = new UsernameAuthenticationFilter(
+        UsernameAuthenticationFilter authenticationFilter = new UsernameAuthenticationFilter(
                 new AntPathRequestMatcher("/login", "POST"),
                 new ProviderManager(usernamePasswordAuthenticationProvider),
                 loginSuccessHandler,
                 loginFailHandler
         );
 
-        http.addFilterBefore(usernameLoginFilter, UsernamePasswordAuthenticationFilter.class);
+        http.addFilterBefore(authenticationFilter, UsernamePasswordAuthenticationFilter.class);
         return http.build();
     }
 
@@ -74,7 +78,7 @@ public class SecurityConfig {
     public SecurityFilterChain jwtFilterChain(HttpSecurity http) throws Exception {
         disableSomeHttpSetting(http);
 
-        http.cors(cors -> cors.configurationSource(corsConfigurationSource))
+        http
                 .securityMatchers(config -> {
                     config.requestMatchers(
                                     new AntPathRequestMatcher("/dict/**"))
@@ -86,12 +90,17 @@ public class SecurityConfig {
                 }).authorizeHttpRequests(authorize -> authorize
                         .requestMatchers("/static/**").permitAll()
                         .anyRequest().authenticated()
-                ).exceptionHandling(exceptionHandling ->
-                        exceptionHandling.accessDeniedHandler(customAccessDeniedHandler)// 鉴权失败异常
+                )
+                .exceptionHandling(ex -> ex
+                        .accessDeniedHandler(customAccessDeniedHandler) // 授权失败处理
                 );
-        http.addFilterBefore(jwtFilter, UsernamePasswordAuthenticationFilter.class);
+
+        JwtFilter jwtFilter = new JwtFilter(jwtUtil, roleMapper, menuMapper);
+
+        http.addFilterBefore(jwtFilter, UsernamePasswordAuthenticationFilter.class); // 添加 JWT 过滤器
         return http.build();
     }
+
 
     /**
      * 禁用不必要的默认filter，处理异常响应内容

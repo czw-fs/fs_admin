@@ -19,12 +19,17 @@ import org.springframework.web.filter.OncePerRequestFilter;
 import java.io.IOException;
 import java.util.Set;
 
-@Component
-@RequiredArgsConstructor
+
 public class JwtFilter extends OncePerRequestFilter {
     private final JwtUtil jwtUtil;
     private final RoleMapper roleMapper;
     private final MenuMapper menuMapper;
+
+    public JwtFilter(JwtUtil jwtUtil, RoleMapper roleMapper, MenuMapper menuMapper) {
+        this.jwtUtil = jwtUtil;
+        this.roleMapper = roleMapper;
+        this.menuMapper = menuMapper;
+    }
 
 
     @Override
@@ -48,6 +53,7 @@ public class JwtFilter extends OncePerRequestFilter {
         //OPTIONS 请求直接放行：预检请求
         if ("OPTIONS".equals(request.getMethod())) {
             response.setStatus(HttpServletResponse.SC_OK);
+            chain.doFilter(request, response);
             return;
         }
 
