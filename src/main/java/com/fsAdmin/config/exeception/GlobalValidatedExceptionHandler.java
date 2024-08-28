@@ -24,32 +24,33 @@ public class GlobalValidatedExceptionHandler {
 
     // <1> 处理 form data方式调用接口校验失败抛出的异常
     @ExceptionHandler(BindException.class)
-    public Result<List<String>> bindExceptionHandler(HttpServletResponse response,BindException e) {
-        response.setStatus(HttpStatus.BAD_REQUEST.value());
-        List<FieldError> fieldErrors = e.getBindingResult().getFieldErrors();
-        List<String> collect = fieldErrors.stream().map(DefaultMessageSourceResolvable::getDefaultMessage).collect(Collectors.toList());
-
-        return Result.error(HttpStatus.BAD_REQUEST.value(), BAD_REQUEST_MSG, collect);
+    public Result<Void> bindExceptionHandler(HttpServletResponse response,BindException e) {
+        String errorMessage = getErrorMessage(response, e);
+        return Result.error(HttpStatus.BAD_REQUEST.value(), BAD_REQUEST_MSG, null);
     }
 
     // <2> 处理 json 请求体调用接口校验失败抛出的异常
     @ExceptionHandler(MethodArgumentNotValidException.class)
-    public Result<List<String>> methodArgumentNotValidExceptionHandler(HttpServletResponse response,MethodArgumentNotValidException e) {
+    public Result<Void> methodArgumentNotValidExceptionHandler(HttpServletResponse response,MethodArgumentNotValidException e) {
+        String errorMessage = getErrorMessage(response, e);
+        return Result.error(HttpStatus.BAD_REQUEST.value(), errorMessage, null);
+    }
+
+    public String getErrorMessage(HttpServletResponse response,BindException e){
         response.setStatus(HttpStatus.BAD_REQUEST.value());
         List<FieldError> fieldErrors = e.getBindingResult().getFieldErrors();
-        List<String> collect = fieldErrors.stream().map(DefaultMessageSourceResolvable::getDefaultMessage).collect(Collectors.toList());
-
-        return Result.error(HttpStatus.BAD_REQUEST.value(), BAD_REQUEST_MSG, collect);
+        List<String> errList = fieldErrors.stream().map(DefaultMessageSourceResolvable::getDefaultMessage).collect(Collectors.toList());
+        return String.join(",", errList);
     }
 
 
     // <3> 处理单个参数校验失败抛出的异常
     @ExceptionHandler(ConstraintViolationException.class)
-    public Result<List<String>> constraintViolationExceptionHandler(HttpServletResponse response,ConstraintViolationException e) {
+    public Result<Void> constraintViolationExceptionHandler(HttpServletResponse response,ConstraintViolationException e) {
         response.setStatus(HttpStatus.BAD_REQUEST.value());
         Set<ConstraintViolation<?>> constraintViolations = e.getConstraintViolations();
-        List<String> collect = constraintViolations.stream().map(ConstraintViolation::getMessage).collect(Collectors.toList());
+        List<String> errList = constraintViolations.stream().map(ConstraintViolation::getMessage).collect(Collectors.toList());
 
-        return Result.error(HttpStatus.BAD_REQUEST.value(), BAD_REQUEST_MSG, collect);
+        return Result.error(HttpStatus.BAD_REQUEST.value(), String.join(",", errList), null);
     }
 }

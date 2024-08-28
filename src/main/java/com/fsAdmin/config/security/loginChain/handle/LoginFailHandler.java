@@ -25,13 +25,6 @@ import java.io.PrintWriter;
 @Slf4j
 public class LoginFailHandler implements AuthenticationFailureHandler {
 
-
-    private final JwtUtil jwtUtil;
-
-    public LoginFailHandler(JwtUtil jwtUtil) {
-        this.jwtUtil = jwtUtil;
-    }
-
     @Override
     public void onAuthenticationFailure(HttpServletRequest request, HttpServletResponse response, AuthenticationException exception) throws IOException, ServletException {
         log.error(exception.getMessage());

@@ -35,7 +35,7 @@ public class GlobalWebExceptionHandle {
      * @return {@link Result }<{@link String }>
      */
     @ExceptionHandler(MethodArgumentTypeMismatchException.class)
-    public Result<String> handleTypeMismatch(HttpServletResponse response,MethodArgumentTypeMismatchException e) {
+    public Result<Void> handleTypeMismatch(HttpServletResponse response,MethodArgumentTypeMismatchException e) {
         String msg = "请求参数的类型与控制器方法期望的参数类型不一致: " + e.getMessage();
         log.error(msg,e);
 
@@ -44,7 +44,7 @@ public class GlobalWebExceptionHandle {
     }
 
     @ExceptionHandler(NoHandlerFoundException.class)
-    public Result<String> handleNotFound(HttpServletResponse response,NoHandlerFoundException e) {
+    public Result<Void> handleNotFound(HttpServletResponse response,NoHandlerFoundException e) {
         String msg = "匹配不到对应的控制单元路径: " + e.getMessage();
         log.error(msg,e);
 
@@ -56,7 +56,7 @@ public class GlobalWebExceptionHandle {
      * 兜底异常处理
      */
     @ExceptionHandler(value = Exception.class)
-    public Result<String> exceptionHandler(HttpServletResponse response, Exception e) {
+    public Result<Void> exceptionHandler(HttpServletResponse response, Exception e) {
         String msg = "服务器异常：" + e.getMessage();
         log.error(msg,e);
 
