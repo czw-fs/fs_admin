@@ -18,10 +18,10 @@ public class UserSearchDto extends BasePage {
     /**
      * 性别
      */
-    private UserGender gender;
+    private UserGender userGender;
 
     /**
      * 状态
      */
-    private UserStatus status;
+    private UserStatus userStatus;
 }

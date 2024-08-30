@@ -1,5 +1,6 @@
 package com.fsAdmin.modules.System.dict.model.dto;
 
+import com.fsAdmin.modules.System.dict.model.enums.DictStatus;
 import jakarta.validation.constraints.NotBlank;
 import lombok.Data;
 import lombok.experimental.Accessors;
@@ -25,7 +26,7 @@ public class UpdateDictDto {
      * 状态
      */
     @NotBlank(message = "状态不能为空")
-    private String status;
+    private DictStatus status;
     /**
      * 说明
      */

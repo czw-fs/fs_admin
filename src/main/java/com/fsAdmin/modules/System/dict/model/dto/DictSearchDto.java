@@ -1,6 +1,7 @@
 package com.fsAdmin.modules.System.dict.model.dto;
 
 
+import com.fsAdmin.modules.System.dict.model.enums.DictStatus;
 import com.fsAdmin.modules.common.model.BasePage;
 import lombok.Data;
 import lombok.EqualsAndHashCode;
@@ -27,5 +28,5 @@ public class DictSearchDto extends BasePage {
     /**
      * 状态
      */
-    private String status;
+    private DictStatus status;
 }

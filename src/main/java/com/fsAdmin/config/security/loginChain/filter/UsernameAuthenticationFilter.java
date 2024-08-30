@@ -19,7 +19,7 @@ import org.springframework.util.StringUtils;
 import java.io.IOException;
 
 /**
- * 获取请求体中用户名和密码，创建SpringSecurity需要的AbstractAuthenticationToken对象，并交给springsecurity进行验证
+ * 具体认证流程
  */
 public class UsernameAuthenticationFilter extends AbstractAuthenticationProcessingFilter {
 
@@ -61,7 +61,11 @@ public class UsernameAuthenticationFilter extends AbstractAuthenticationProcessi
                 .setUsername(username)
                 .setPassword(password)
         ;
-        //创建好认证对象后使用AuthenticationManager调用认证方法
-        return getAuthenticationManager().authenticate(authenticationToken);
+        //创建好认证对象Authentication后使用AuthenticationManager调用认证方法
+        Authentication authentication = getAuthenticationManager().authenticate(authenticationToken);
+        /**
+         * AbstractAuthenticationProcessingFilter在这个过滤其中会创建SecurityContext，并将认证成功Authentication放到其中
+         */
+        return authentication;
     }
 }

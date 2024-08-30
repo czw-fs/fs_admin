@@ -3,6 +3,7 @@ package com.fsAdmin.modules.System.dict.model.entities;
 
 import com.baomidou.mybatisplus.annotation.TableId;
 import com.baomidou.mybatisplus.annotation.TableName;
+import com.fsAdmin.modules.System.dict.model.enums.DictStatus;
 import com.fsAdmin.modules.common.model.BaseEntity;
 import lombok.Data;
 import lombok.EqualsAndHashCode;
@@ -29,7 +30,7 @@ public class Dict extends BaseEntity {
     /**
      * 状态
      */
-    private String status;
+    private DictStatus status;
     /**
      * 说明
      */

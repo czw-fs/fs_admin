@@ -48,6 +48,7 @@ public class DictServiceImpl extends ServiceImpl<DictMapper, Dict> implements Di
         List<Dict> dictList = dictMapper.getPage(dto, page);
 
         List<DictVo> dictVoList = dictConvert.dictListToDictVoList(dictList);
+
         page.setRecords(dictVoList);
         return page;
     }

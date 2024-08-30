@@ -17,7 +17,7 @@ import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Component;
 
 /**
- * 使用用户名密码登录方式的认证逻辑
+ * 具体认证逻辑
  */
 
 @Component
@@ -72,9 +72,6 @@ public class UsernamePasswordAuthenticationProvider implements AuthenticationPro
                 .setUserId(user.getId())
                 .setUsername(user.getUsername())
                 ;
-        /**
-         * 这里security会将UserLoginInfo对象封装到Authentication对象中，并设置到当前线程的security的上下文中。接下载就可以使用SecurityContext了
-         */
     }
 
     @Override

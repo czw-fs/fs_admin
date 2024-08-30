@@ -19,7 +19,7 @@ import java.util.Map;
 @Component
 public class JwtUtil {
 
-    @Value("${jwt.secret:helloworld}")
+    @Value("${jwt.secret:Helloworld}")
     private String secret;
 
     @Value("${jwt.expiration:7}")
@@ -30,8 +30,9 @@ public class JwtUtil {
         Map<String, Object> map = new HashMap<>();
         map.put("alg", "HS256");
         map.put("typ", "JWT");
-        String token = JWT.create().withHeader(map)// 添加头部
-                //可以将基本信息放到claims中
+        String token = JWT
+                .create()
+                .withHeader(map)// 添加头部
                 .withClaim("userId", userLoginInfo.getUserId())//userId
                 .withClaim("username", userLoginInfo.getUsername())//用户名
                 .withClaim("sessionId", userLoginInfo.getSessionId())//会话id
@@ -43,7 +44,8 @@ public class JwtUtil {
 
     /**
      * 验证token是否有效
-     *  有效返回true 无效返回false
+     * 有效返回true 无效返回false
+     *
      * @param token
      * @return
      */

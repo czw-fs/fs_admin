@@ -22,7 +22,7 @@ public class CreateUserDto {
     /**
      * 性别
      */
-    private UserGender gender;
+    private UserGender userGender;
     /**
      * 头像
      */
@@ -38,5 +38,5 @@ public class CreateUserDto {
     /**
      * 状态
      */
-    private UserStatus status;
+    private UserStatus userStatus;
 }

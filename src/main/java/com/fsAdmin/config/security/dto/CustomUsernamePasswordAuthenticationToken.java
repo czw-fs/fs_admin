@@ -32,6 +32,11 @@ public class CustomUsernamePasswordAuthenticationToken extends AbstractAuthentic
         super(authorities);//权限
     }
 
+    @Override
+    public void eraseCredentials() {
+        this.password = null;
+    }
+
     public CustomUsernamePasswordAuthenticationToken() {
         super(null); // 禁用权限
     }

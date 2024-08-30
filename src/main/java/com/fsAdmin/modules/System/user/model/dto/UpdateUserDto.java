@@ -25,7 +25,7 @@ public class UpdateUserDto {
     /**
      * 性别
      */
-    private UserGender gender;
+    private UserGender userGender;
     /**
      * 头像
      */

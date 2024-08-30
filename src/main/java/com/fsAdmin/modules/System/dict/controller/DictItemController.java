@@ -24,6 +24,15 @@ public class DictItemController {
     private final DictItemService dictItemService;
 
     /**
+     * 根据dictCode获取dictItemVo
+     */
+    @GetMapping
+    public Result<List<DictItemSelectVo>> getDictItemVoListByDictCode(String dictCode) {
+        List<DictItemVo> dictItemVoList =  dictItemService.getDictItemVoListByDictCode(dictCode);
+        return Result.success(dictItemVoList);
+    }
+
+    /**
      * 新增字典项
      * @param dto
      * @return

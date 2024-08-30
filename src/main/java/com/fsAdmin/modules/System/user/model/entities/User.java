@@ -4,6 +4,7 @@ package com.fsAdmin.modules.System.user.model.entities;
 import com.baomidou.mybatisplus.annotation.TableId;
 import com.baomidou.mybatisplus.annotation.TableName;
 import com.fsAdmin.modules.System.user.model.enums.UserGender;
+import com.fsAdmin.modules.System.user.model.enums.UserStatus;
 import com.fsAdmin.modules.common.model.BaseEntity;
 import lombok.Data;
 import lombok.EqualsAndHashCode;
@@ -30,7 +31,7 @@ public class User extends BaseEntity {
     /**
      * 性别
      */
-    private UserGender gender;
+    private UserGender userGender;
     /**
      * 头像
      */
@@ -46,7 +47,7 @@ public class User extends BaseEntity {
     /**
      * 状态
      */
-    private String status;
+    private UserStatus userStatus;
 
 }
 
