@@ -21,6 +21,7 @@ import com.fsAdmin.utils.SecurityUtil;
 import lombok.RequiredArgsConstructor;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 import org.springframework.util.CollectionUtils;
 
 import java.util.List;
@@ -42,6 +43,12 @@ public class UserServiceImpl extends ServiceImpl<UserMapper, User> implements Us
         User user = userMapper.selectById(SecurityUtil.getUserId());
         UserVo userVo = userConvert.entityToUserVo(user);
         return userVo;
+    }
+
+    @Override
+    @Transactional
+    public void deleteUserBatch(List<Long> ids) {
+        removeBatchByIds(ids);
     }
 
 //    @Override
@@ -105,4 +112,6 @@ public class UserServiceImpl extends ServiceImpl<UserMapper, User> implements Us
         page.setRecords(userVoList);
         return page;
     }
+
+
 }

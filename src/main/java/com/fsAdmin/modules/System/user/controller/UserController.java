@@ -14,6 +14,8 @@ import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.List;
+
 @RestController
 @RequiredArgsConstructor
 @RequestMapping("/user")
@@ -42,7 +44,7 @@ public class UserController {
      * @return
      */
     @PostMapping("/create")
-    public Result<Void> createUser(@RequestBody CreateUserDto userDto) {
+    public Result<Void> createUser(@RequestBody @Validated CreateUserDto userDto) {
         userService.createUser(userDto);
         return Result.success();
     }
@@ -85,5 +87,15 @@ public class UserController {
     public Result<Page<UserVo>> getUserPage(@Validated UserSearchDto userDto) {
         Page<UserVo> userDtoPage = userService.selectPage(userDto);
         return Result.success(userDtoPage);
+    }
+
+    /**
+     * 批量删除用户
+     * @return
+     */
+    @GetMapping("/deleteUserBatch")
+    public Result<Void> deleteUserBatch(List<String> ids) {
+//        userService.deleteUserBatch(ids);
+        return Result.success();
     }
 }

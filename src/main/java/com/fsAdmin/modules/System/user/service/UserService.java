@@ -10,6 +10,8 @@ import com.fsAdmin.modules.System.user.model.entities.User;
 import com.fsAdmin.modules.System.user.model.vo.UserInfoVo;
 import com.fsAdmin.modules.System.user.model.vo.UserVo;
 
+import java.util.List;
+
 public interface UserService extends IService<User> {
     User selectUserByUsername(String username);
 
@@ -24,4 +26,6 @@ public interface UserService extends IService<User> {
 //    UserInfoVo getUserInfoVo();
 
     UserVo getCurrentUserInfo();
+
+    void deleteUserBatch(List<Long> ids);
 }
