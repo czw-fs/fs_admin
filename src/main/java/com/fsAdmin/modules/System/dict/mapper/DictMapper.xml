@@ -12,11 +12,19 @@
             <if test="dto.code != null and dto.code != ''">
                 and code like concat('%',#{dto.code},'%')
             </if>
-            <if test="dto.status!= null and dto.status != ''">
-                and status = #{dto.status}
+            <if test="dto.dictStatus!= null and dto.dictStatus != ''">
+                and dict_status = #{dto.dictStatus}
             </if>
             and is_deleted = false
         </where>
     </select>
 
+    <select id="selectDictItemSelectVoList" resultType="com.fsAdmin.modules.System.dict.model.vo.DictItemSelectVo">
+        select sdi.id,
+               sdi.name,
+               sdi.value
+        from sys_dict sd
+                 left join sys_dict_item sdi on sdi.dict_id = sd.id
+        where sd.code = #{dictCode}
+    </select>
 </mapper>

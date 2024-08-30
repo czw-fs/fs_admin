@@ -9,6 +9,7 @@ import com.fsAdmin.modules.System.dict.model.dto.CreateDictItemDto;
 import com.fsAdmin.modules.System.dict.model.dto.DictItemSearchDto;
 import com.fsAdmin.modules.System.dict.model.dto.UpdateDictItemDto;
 import com.fsAdmin.modules.System.dict.model.entities.DictItem;
+import com.fsAdmin.modules.System.dict.model.vo.DictItemSelectVo;
 import com.fsAdmin.modules.System.dict.model.vo.DictItemVo;
 import com.fsAdmin.modules.System.dict.service.DictItemService;
 import lombok.RequiredArgsConstructor;
@@ -24,6 +25,12 @@ public class DictItemServiceImpl extends ServiceImpl<DictItemMapper, DictItem> i
     private final DictMapper dictMapper;
     private final DictItemConvert dictItemConvert;
     private final DictItemMapper dictItemMapper;
+
+    @Override
+    public List<DictItemSelectVo> getDictItemVoListByDictCode(String dictCode) {
+        List<DictItemSelectVo> result = dictMapper.selectDictItemSelectVoList(dictCode);
+        return result;
+    }
 
     @Override
     public void create(CreateDictItemDto dto) {
@@ -50,5 +57,7 @@ public class DictItemServiceImpl extends ServiceImpl<DictItemMapper, DictItem> i
         List<DictItemVo> dictItemVoList = dictItemConvert.entityListToDictItemVoList(dictItemList);
         return dictItemVoList;
     }
+
+
 
 }

@@ -31,7 +31,7 @@ public class User extends BaseEntity {
     /**
      * 性别
      */
-    private UserGender userGender;
+    private UserGender gender;
     /**
      * 头像
      */
@@ -47,7 +47,7 @@ public class User extends BaseEntity {
     /**
      * 状态
      */
-    private UserStatus userStatus;
+    private UserStatus status;
 
 }
 

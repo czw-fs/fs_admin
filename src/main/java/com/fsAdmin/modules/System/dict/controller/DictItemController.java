@@ -4,12 +4,14 @@ package com.fsAdmin.modules.System.dict.controller;
 import com.fsAdmin.modules.System.dict.model.dto.CreateDictItemDto;
 import com.fsAdmin.modules.System.dict.model.dto.DictItemSearchDto;
 import com.fsAdmin.modules.System.dict.model.dto.UpdateDictItemDto;
+import com.fsAdmin.modules.System.dict.model.vo.DictItemSelectVo;
 import com.fsAdmin.modules.System.dict.model.vo.DictItemVo;
 import com.fsAdmin.modules.System.dict.service.DictItemService;
 import com.fsAdmin.modules.common.model.Result;
 import lombok.RequiredArgsConstructor;
 import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
+import com.fsAdmin.modules.System.dict.model.vo.DictItemSelectVo;
 
 import java.util.List;
 
@@ -26,9 +28,9 @@ public class DictItemController {
     /**
      * 根据dictCode获取dictItemVo
      */
-    @GetMapping
+    @GetMapping("/getSelectVoList")
     public Result<List<DictItemSelectVo>> getDictItemVoListByDictCode(String dictCode) {
-        List<DictItemVo> dictItemVoList =  dictItemService.getDictItemVoListByDictCode(dictCode);
+        List<DictItemSelectVo> dictItemVoList =  dictItemService.getDictItemVoListByDictCode(dictCode);
         return Result.success(dictItemVoList);
     }
 
