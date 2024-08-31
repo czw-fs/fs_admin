@@ -9,8 +9,11 @@ import com.fsAdmin.modules.System.user.model.vo.UserInfoVo;
 import com.fsAdmin.modules.System.user.model.vo.UserVo;
 import com.fsAdmin.modules.System.user.service.UserService;
 import com.fsAdmin.modules.common.model.Result;
+import jakarta.validation.constraints.NotNull;
 import lombok.RequiredArgsConstructor;
 import org.springframework.security.access.prepost.PreAuthorize;
+import org.springframework.util.CollectionUtils;
+import org.springframework.util.StringUtils;
 import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
 
@@ -40,6 +43,7 @@ public class UserController {
 
     /**
      * 新增用户
+     *
      * @param userDto
      * @return
      */
@@ -51,6 +55,7 @@ public class UserController {
 
     /**
      * 修改用户
+     *
      * @param userDto
      * @return
      */
@@ -64,7 +69,7 @@ public class UserController {
      * 根据id查询用户
      */
     @GetMapping("/{id}")
-        public Result<UserVo> getUserById(@PathVariable Long id) {
+    public Result<UserVo> getUserById(@PathVariable Long id) {
         UserVo userVo = userService.getOneById(id);
         return Result.success(userVo);
     }
@@ -80,6 +85,7 @@ public class UserController {
 
     /**
      * 分页查询用户
+     *
      * @param userDto
      * @return
      */
@@ -91,11 +97,15 @@ public class UserController {
 
     /**
      * 批量删除用户
+     *
      * @return
      */
-    @GetMapping("/deleteUserBatch")
-    public Result<Void> deleteUserBatch(List<String> ids) {
-//        userService.deleteUserBatch(ids);
+    @DeleteMapping("/deleteUserBatch")
+    public Result<Void> deleteUserBatch(@RequestParam(value = "id",required = false) List<Long> ids) {
+        if(CollectionUtils.isEmpty(ids)) {
+            return Result.error("选项不能为空");
+        }
+        userService.deleteUserBatch(ids);
         return Result.success();
     }
 }

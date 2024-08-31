@@ -75,7 +75,7 @@ public class UserServiceImpl extends ServiceImpl<UserMapper, User> implements Us
 
     @Override
     public User selectUserByUsername(String username) {
-        return userMapper.selectOne(new LambdaQueryWrapper<User>().eq(User::getUsername, username).eq(User::getIsDeleted,false));
+        return userMapper.selectOne(new LambdaQueryWrapper<User>().eq(User::getUsername, username).eq(User::getIsDeleted, false));
     }
 
     @Override
@@ -106,7 +106,7 @@ public class UserServiceImpl extends ServiceImpl<UserMapper, User> implements Us
     @Override
     public Page<UserVo> selectPage(UserSearchDto searchDto) {
         Page<UserVo> page = new Page<>(searchDto.getPageNum(), searchDto.getPageSize());
-        List<User> userList = userMapper.getPage(searchDto,page);
+        List<User> userList = userMapper.getPage(searchDto, page);
 
         List<UserVo> userVoList = userConvert.userListToUserVoList(userList);
         page.setRecords(userVoList);
