@@ -13,6 +13,7 @@ import com.fsAdmin.modules.System.dict.model.vo.DictVo;
 import com.fsAdmin.modules.System.dict.service.DictService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import java.util.List;
 
@@ -51,5 +52,11 @@ public class DictServiceImpl extends ServiceImpl<DictMapper, Dict> implements Di
 
         page.setRecords(dictVoList);
         return page;
+    }
+
+    @Override
+    @Transactional
+    public void deleteBatch(List<Long> ids) {
+        removeBatchByIds(ids);
     }
 }

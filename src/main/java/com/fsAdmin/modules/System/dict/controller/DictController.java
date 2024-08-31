@@ -11,6 +11,8 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.List;
+
 /**
  * 字典
  */
@@ -72,5 +74,14 @@ public class DictController {
     public Result<Page<DictVo>> page(DictSearchDto searchDto) {
         Page<DictVo> page = dictService.getPage(searchDto);
         return Result.success(page);
+    }
+
+    /**
+     * 分页查询
+     */
+    @GetMapping("/deleteBatch")
+    public Result<Page<DictVo>> deleteBatch(@RequestParam("id") List<Long> ids) {
+        dictService.deleteBatch(ids);
+        return Result.success();
     }
 }

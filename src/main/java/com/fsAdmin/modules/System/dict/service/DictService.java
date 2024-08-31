@@ -9,6 +9,8 @@ import com.fsAdmin.modules.System.dict.model.dto.UpdateDictDto;
 import com.fsAdmin.modules.System.dict.model.entities.Dict;
 import com.fsAdmin.modules.System.dict.model.vo.DictVo;
 
+import java.util.List;
+
 public interface DictService extends IService<Dict> {
     void create(CreateDictDto dictDto);
 
@@ -17,4 +19,6 @@ public interface DictService extends IService<Dict> {
     DictVo getOneById(Long id);
 
     Page<DictVo> getPage(DictSearchDto searchDto);
+
+    void deleteBatch(List<Long> ids);
 }
