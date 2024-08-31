@@ -9,7 +9,7 @@ import lombok.experimental.Accessors;
 @Accessors(chain = true)
 public class DictVo {
     /**
-     * 名称
+         * 名称
      */
     private String name;
     /**

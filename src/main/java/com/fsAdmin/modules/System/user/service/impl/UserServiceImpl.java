@@ -80,6 +80,12 @@ public class UserServiceImpl extends ServiceImpl<UserMapper, User> implements Us
 
     @Override
     public void createUser(CreateUserDto userDto) {
+
+        User exitUser = userMapper.selectOne(new LambdaQueryWrapper<User>().eq(User::getUsername, userDto.getUsername()));
+        if(exitUser != null) {
+            throw new RuntimeException("用户名已存在");
+        }
+
         String encode = passwordEncoder.encode(userDto.getPassword());
         userDto.setPassword(encode);
 
@@ -90,8 +96,6 @@ public class UserServiceImpl extends ServiceImpl<UserMapper, User> implements Us
 
     @Override
     public void updateUser(UpdateUserDto userDto) {
-        String encode = passwordEncoder.encode(userDto.getPassword());
-        userDto.setPassword(encode);
         User user = userConvert.updateUserDtoToEntity(userDto);
         userMapper.updateById(user);
     }
@@ -112,6 +116,8 @@ public class UserServiceImpl extends ServiceImpl<UserMapper, User> implements Us
         page.setRecords(userVoList);
         return page;
     }
+
+    // todo 重置密码
 
 
 }

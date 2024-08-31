@@ -49,7 +49,7 @@ public class DictController {
      * @return
      */
     @GetMapping("/{id}")
-    public Result<DictVo> getById(@PathVariable("id")  Long id) {
+    public Result<DictVo> getDictById(@PathVariable("id")  Long id) {
         DictVo dictVo = dictService.getOneById(id);
         return Result.success(dictVo);
     }

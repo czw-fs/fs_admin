@@ -28,5 +28,5 @@ public class DictSearchDto extends BasePage {
     /**
      * 状态
      */
-    private DictStatus dictStatus;
+    private DictStatus status;
 }

@@ -12,8 +12,8 @@
             <if test="dto.code != null and dto.code != ''">
                 and code like concat('%',#{dto.code},'%')
             </if>
-            <if test="dto.dictStatus!= null and dto.dictStatus != ''">
-                and dict_status = #{dto.dictStatus}
+            <if test="dto.status!= null">
+                and status = #{dto.status}
             </if>
             and is_deleted = false
         </where>
