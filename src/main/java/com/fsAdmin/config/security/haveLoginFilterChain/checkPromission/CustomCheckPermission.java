@@ -1,8 +1,9 @@
-package com.fsAdmin.config.security.haveLoginFilterChain;
+package com.fsAdmin.config.security.haveLoginFilterChain.checkPromission;
 
 import com.fsAdmin.utils.SecurityUtil;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
+import org.springframework.security.access.expression.method.MethodSecurityExpressionOperations;
 import org.springframework.stereotype.Component;
 import org.springframework.util.CollectionUtils;
 import org.springframework.util.StringUtils;

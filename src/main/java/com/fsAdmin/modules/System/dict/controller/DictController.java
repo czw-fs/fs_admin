@@ -1,6 +1,7 @@
 package com.fsAdmin.modules.System.dict.controller;
 
 import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
+import com.fsAdmin.config.security.haveLoginFilterChain.checkPromission.CustomCheckPermission;
 import com.fsAdmin.modules.System.dict.model.dto.CreateDictDto;
 import com.fsAdmin.modules.System.dict.model.dto.DictSearchDto;
 import com.fsAdmin.modules.System.dict.model.dto.UpdateDictDto;
@@ -8,6 +9,8 @@ import com.fsAdmin.modules.System.dict.model.vo.DictVo;
 import com.fsAdmin.modules.System.dict.service.DictService;
 import com.fsAdmin.modules.common.model.Result;
 import lombok.RequiredArgsConstructor;
+import org.springframework.context.annotation.Import;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
 
@@ -19,6 +22,7 @@ import java.util.List;
 @RequiredArgsConstructor
 @RestController
 @RequestMapping("/dict")
+@Import({CustomCheckPermission.class})
 public class DictController {
 
     private final DictService dictService;
@@ -51,6 +55,7 @@ public class DictController {
      * @return
      */
     @GetMapping("/{id}")
+    @PreAuthorize("@ss.hasPerm1(#root)")
     public Result<DictVo> getDictById(@PathVariable("id")  Long id) {
         DictVo dictVo = dictService.getOneById(id);
         return Result.success(dictVo);

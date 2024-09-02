@@ -97,8 +97,8 @@ public class SecurityConfig {
                 );
 
         JwtFilter jwtFilter = new JwtFilter(jwtUtil, roleMapper, menuMapper);
-
         http.addFilterBefore(jwtFilter, UsernamePasswordAuthenticationFilter.class); // 添加 JWT 过滤器
+
         return http.build();
     }
 
