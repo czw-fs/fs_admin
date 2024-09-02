@@ -2,6 +2,7 @@ package com.fsAdmin.modules.System.dict.model.dto;
 
 import com.fsAdmin.modules.System.dict.model.enums.DictStatus;
 import jakarta.validation.constraints.NotBlank;
+import jakarta.validation.constraints.NotNull;
 import lombok.Data;
 import lombok.experimental.Accessors;
 
@@ -21,7 +22,7 @@ public class CreateDictDto {
     /**
      * 状态
      */
-    @NotBlank(message = "状态不能为空")
+    @NotNull(message = "状态不能为空")
     private DictStatus status;
     /**
      * 说明

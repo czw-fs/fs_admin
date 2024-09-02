@@ -21,4 +21,6 @@ public interface DictItemService extends IService<DictItem> {
     List<DictItemVo> getList(DictItemSearchDto dto);
 
     List<DictItemSelectVo> getDictItemVoListByDictCode(String dictCode);
+
+    List<DictItemVo> getDictItemListByDictId(Long dictId);
 }

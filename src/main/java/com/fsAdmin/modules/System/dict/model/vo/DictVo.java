@@ -9,6 +9,10 @@ import lombok.experimental.Accessors;
 @Accessors(chain = true)
 public class DictVo {
     /**
+     * id
+     */
+    private Long id;
+    /**
          * 名称
      */
     private String name;
@@ -24,4 +28,8 @@ public class DictVo {
      * 说明
      */
     private String remark;
+    /**
+     * 是否有子节点
+     */
+    private Boolean hasChildren = false;
 }

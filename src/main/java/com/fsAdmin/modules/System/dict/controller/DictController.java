@@ -55,7 +55,7 @@ public class DictController {
      * @return
      */
     @GetMapping("/{id}")
-    @PreAuthorize("@ss.hasPerm1(#root)")
+//    @PreAuthorize("@ss.hasPerm('abc')")
     public Result<DictVo> getDictById(@PathVariable("id")  Long id) {
         DictVo dictVo = dictService.getOneById(id);
         return Result.success(dictVo);
@@ -82,7 +82,7 @@ public class DictController {
     }
 
     /**
-     * 分页查询
+     * 批量删除
      */
     @GetMapping("/deleteBatch")
     public Result<Page<DictVo>> deleteBatch(@RequestParam("id") List<Long> ids) {

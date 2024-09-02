@@ -88,4 +88,13 @@ public class DictItemController {
         List<DictItemVo> result = dictItemService.getList(dto);
         return Result.success(result);
     }
+
+    /**
+     * 更具dictId获取dictItemList
+     */
+    @GetMapping("/getDictItemListByDictId/{dictId}")
+    public Result<List<DictItemVo>> getDictItemListByDictId(@PathVariable("dictId") Long dictId) {
+        List<DictItemVo> result = dictItemService.getDictItemListByDictId(dictId);
+        return Result.success(result);
+    }
 }

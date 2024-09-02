@@ -16,6 +16,11 @@ import lombok.experimental.Accessors;
 public class DictSearchDto extends BasePage {
 
     /**
+     * id
+     */
+    private Long id;
+
+    /**
      * 名称
      */
     private String name;

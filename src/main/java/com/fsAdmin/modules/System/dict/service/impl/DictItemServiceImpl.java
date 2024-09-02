@@ -58,6 +58,10 @@ public class DictItemServiceImpl extends ServiceImpl<DictItemMapper, DictItem> i
         return dictItemVoList;
     }
 
-
+    @Override
+    public List<DictItemVo> getDictItemListByDictId(Long dictId) {
+        List<DictItemVo> dictItemVoList = dictItemMapper.getDictItemListByDictId(dictId);
+        return dictItemVoList;
+    }
 
 }
