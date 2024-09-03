@@ -15,7 +15,7 @@
             <if test="dto.status!= null and dto.status != ''">
                 and status = #{dto.status}
             </if>
-
+            and is_deleted = false
         </where>
     </select>
 
@@ -23,6 +23,6 @@
         select sdi.*
         from sys_dict sd
         left join sys_dict_item sdi on sdi.dict_id = sd.id
-        where sd.id = #{dictId}
+        where sd.id = #{dictId} and sdi.is_deleted = false
     </select>
 </mapper>
