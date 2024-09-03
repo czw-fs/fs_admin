@@ -6,6 +6,8 @@ import com.fsAdmin.modules.System.menu.model.enums.MenuType;
 import lombok.Data;
 import lombok.experimental.Accessors;
 
+import java.util.List;
+
 @Data
 @Accessors(chain = true)
 public class MenuVo {
@@ -63,4 +65,8 @@ public class MenuVo {
      * 路由参数
      */
     private String params;
+    /**
+     * children
+     */
+    private List<MenuVo> children;
 }

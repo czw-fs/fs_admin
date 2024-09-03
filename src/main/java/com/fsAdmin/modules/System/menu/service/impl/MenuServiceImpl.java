@@ -114,8 +114,21 @@ public class MenuServiceImpl extends ServiceImpl<MenuMapper, Menu> implements Me
 
     @Override
     public List<MenuVo> getList(MenuSearchDto dto) {
-        List<Menu> menuList = menuMapper.getList(dto);
-        List<MenuVo> menuDtos = menuConvert.entityListToDtoList(menuList);
-        return menuDtos;
+        List<MenuVo> menuList = new ArrayList<>();
+        setChildrenForMenuPage(SystemConstants.MENU_ROOT_ID,menuList);
+        return menuList;
+    }
+
+    private void setChildrenForMenuPage(Long id, List<MenuVo> menuList) {
+        List<Menu> children = menuMapper.selectList(
+                new LambdaQueryWrapper<Menu>()
+                        .eq(Menu::getParentId, id)
+                        .eq(Menu::getIsDeleted, false)
+        );
+        List<MenuVo> menuVoList = menuConvert.entityListToDtoList(children);
+        for (MenuVo menu : menuVoList) {
+            menuList.add(menu); // Add the menu to the list
+            setChildrenForMenuPage(menu.getId(), menuList);
+        }
     }
 }
