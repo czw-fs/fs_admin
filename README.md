@@ -1,4 +1,4 @@
-介绍：由本人开发并维护的一套基于Spring Security的权限管理脚手架,适合后端快速进行开发
+介绍：基于Spring Security的权限管理脚手架,适合后端快速进行开发
 
 技术栈：Spring Booot、Spring Security + JWT、MapStruct、Validation、Mybatis-Plus、Redis
 
