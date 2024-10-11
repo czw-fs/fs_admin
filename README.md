@@ -8,5 +8,6 @@
 使用Validation的全局传参异常处理，基于MapStruct的Bean属性转换
 
 项目结构
+
 ![image](https://github.com/user-attachments/assets/62ed021e-54d3-4f9e-8d6b-dd5be324a0da)
 
